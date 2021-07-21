@@ -8,6 +8,9 @@
 #define RMB_VALUE   0x04020018
 
 void memory_loop(){
+
+	*(int *)(RMB_COMMAND) = CMD_EMPTY;
+
 	while(1)
 	{
 		while(*(int *)(RMB_COMMAND) == CMD_EMPTY);
