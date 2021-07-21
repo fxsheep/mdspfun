@@ -1,6 +1,7 @@
 #define CMD_EMPTY 0
 #define CMD_READ  1
 #define CMD_WRITE 2
+#define CMD_EXEC  3
 
 #define RMB_COMMAND 0x04020010
 #define RMB_ADDRESS 0x04020014
@@ -17,9 +18,14 @@ void memory_loop(){
 		}
 
 		if(*(int *)(RMB_COMMAND) == CMD_WRITE)
-                {
-                        **(int **)(RMB_ADDRESS) = *(int *)(RMB_VALUE);
-                }
+		{
+			**(int **)(RMB_ADDRESS) = *(int *)(RMB_VALUE);
+		}
+
+		if(*(int *)(RMB_COMMAND) == CMD_EXEC)
+		{
+			((void(*)(void))*(int *)(RMB_ADDRESS))();
+		}
 
 		*(int *)(RMB_COMMAND) = CMD_EMPTY;
 
